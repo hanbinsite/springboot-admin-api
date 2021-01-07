@@ -37,4 +37,18 @@ public interface AdminMapper {
             @Result(property = "updatedAt", column = "updated_at")
     })
     Admin getAdminByUsernameOrMobile(String username, String mobile);
+
+    /**
+     * 根据管理员id获得详情
+     * @param id 管理员id
+     * @return admin
+     */
+    @Select("SELECT * FROM admin WHERE id = #{id}")
+    @Results({
+            @Result(property = "isSuper", column = "is_super"),
+            @Result(property = "groupId", column = "group_id"),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at")
+    })
+    Admin getAdminById(Integer id);
 }

@@ -18,4 +18,11 @@ public interface AdminService {
      * @return admin
      */
     Admin login(String username, String password);
+
+    /**
+     * 获得管理员详情
+     * @param id 管理员id
+     * @return admin
+     */
+    Admin getAdminById(Integer id);
 }

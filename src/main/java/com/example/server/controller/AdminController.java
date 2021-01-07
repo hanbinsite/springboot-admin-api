@@ -7,23 +7,24 @@ import com.example.server.utils.JwtUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
 
     private final AdminServiceImpl adminService;
 
-    public AdminController(AdminServiceImpl adminService) {
+    private final JwtUtils jwtUtils;
+
+    public AdminController(AdminServiceImpl adminService, JwtUtils jwtUtils) {
         this.adminService = adminService;
+        this.jwtUtils = jwtUtils;
     }
 
     @PostMapping("/login")
     public Object login(@RequestBody @Validated AdminLoginVo adminLoginVo) {
         System.out.print(adminLoginVo.getUsername());
         Admin admin = adminService.login(adminLoginVo.getUsername(), adminLoginVo.getPassword());
-        String token = JwtUtils.getToken(admin);
+        String token = jwtUtils.getToken(admin);
         String menu = "这里有可能返回该用户所有权限菜单";
         return token;
     }

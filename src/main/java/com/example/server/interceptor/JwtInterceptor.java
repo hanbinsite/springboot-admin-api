@@ -1,8 +1,7 @@
 package com.example.server.interceptor;
 
 import com.example.server.common.result.enums.ResultEnum;
-import com.example.server.common.result.utils.ResultUtils;
-import com.example.server.exception.BaseException;
+import com.example.server.exception.ApiException;
 import com.example.server.exception.NotLoginException;
 import com.example.server.utils.JwtUtils;
 import org.springframework.stereotype.Component;
@@ -13,6 +12,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
+
+    private final JwtUtils jwtUtils;
+
+    public JwtInterceptor(JwtUtils jwtUtils) {
+        this.jwtUtils = jwtUtils;
+    }
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
         System.out.print(request.getRequestURI());
@@ -20,11 +26,15 @@ public class JwtInterceptor implements HandlerInterceptor {
         if (token == null) {
             throw new NotLoginException();
         }
-        int result = JwtUtils.verifyToken(token);
+        int result = jwtUtils.verifyToken(token);
         if (result == ResultEnum.NOT_LOGIN.getCode()) {
             throw new NotLoginException();
         } else if (result == ResultEnum.TOKEN_EXPIRE.getCode()) {
             request.setAttribute("tokenExpired", true);
+        }
+        Boolean has = jwtUtils.verifyRule(request.getRequestURI(), token);
+        if (!has) {
+            throw new ApiException(ResultEnum.NO_ACCESS_RIGHT.getCode(), "无访问权限");
         }
         request.setAttribute("tokenExpired", false);
         return true;

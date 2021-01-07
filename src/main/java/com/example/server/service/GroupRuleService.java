@@ -14,4 +14,12 @@ public interface GroupRuleService {
      * @return List<Rule>
      */
     List<GroupRuleEntity> getRuleByParentIdAndGroupId(Integer parentId, Integer groupId);
+
+    /**
+     * 检测用户对某个接口是否有权限
+     * @param api 当前访问地址
+     * @param groupId 管理员分组
+     * @return GroupRuleEntity
+     */
+    Boolean getRuleByApiAndGroupId(String api, Integer groupId);
 }
