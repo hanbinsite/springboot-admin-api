@@ -21,6 +21,8 @@ public interface RuleMapper {
     @Select("SELECT * FROM `rules` WHERE `parent_id` = #{parentId} AND `status` = 1 ORDER BY sort ASC")
     @Results({
             @Result(property = "parentId", column = "parent_id"),
+            @Result(property = "noCache", column = "no_cache"),
+            @Result(property = "activeMenu", column = "active_menu"),
             @Result(property = "createdAt", column = "created_at"),
             @Result(property = "updatedAt", column = "updated_at")
     })

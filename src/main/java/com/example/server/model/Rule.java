@@ -27,6 +27,10 @@ public class Rule {
 
     private Integer affix;
 
+    private Integer noCache;
+
+    private String activeMenu;
+
     private Integer sort;
 
     private Integer status;

@@ -22,7 +22,9 @@ public interface GroupRuleMapper {
      */
     @Select("SELECT b.* FROM `group_rules` AS `a` INNER JOIN `rules` AS `b` ON `a`.`rule_id` = `b`.`id` WHERE `b`.`parent_id` = #{parentId} AND `a`.`group_id` = #{groupId} AND `b`.`status` = 1 ORDER BY `b`.`sort` ASC")
     @Results({
-            @Result(property = "parentId", column = "parent_id")
+            @Result(property = "parentId", column = "parent_id"),
+            @Result(property = "noCache", column = "no_cache"),
+            @Result(property = "activeMenu", column = "active_menu")
     })
     List<GroupRuleEntity> getRuleByParentIdAndGroupId(Integer parentId, Integer groupId);
 
@@ -34,7 +36,9 @@ public interface GroupRuleMapper {
      */
     @Select("SELECT b.* FROM `group_rules` AS `a` INNER JOIN `rules` AS `b` ON `a`.`rule_id` = `b`.`id` WHERE `b`.`api` = #{api} AND `a`.`group_id` = #{groupId} AND `b`.`status` = 1 ORDER BY `b`.`sort` ASC")
     @Results({
-            @Result(property = "parentId", column = "parent_id")
+            @Result(property = "parentId", column = "parent_id"),
+            @Result(property = "noCache", column = "no_cache"),
+            @Result(property = "activeMenu", column = "active_menu")
     })
     GroupRuleEntity getRuleByApiAndGroupId(String api, Integer groupId);
 

@@ -9,6 +9,8 @@ public class Group {
 
     private String name;
 
+    private String description;
+
     private Integer isSuper;
 
     private Integer status;
