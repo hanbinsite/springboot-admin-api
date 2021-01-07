@@ -21,7 +21,6 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        System.out.print(request.getRequestURI());
         String token = request.getHeader("Authorization");
         if (token == null) {
             throw new NotLoginException();

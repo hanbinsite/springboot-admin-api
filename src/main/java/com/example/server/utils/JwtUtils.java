@@ -40,7 +40,7 @@ public class JwtUtils {
                 .withIssuedAt(new Date())
                 .withExpiresAt(expireTime)
                 .sign(Algorithm.HMAC256(tokenPassword));
-        redisUtils.set("admin:token:" + token, admin.getId().toString());
+        redisUtils.set("admin:token:" + token, admin.getId().toString(), 18000);
         return token;
     }
 
