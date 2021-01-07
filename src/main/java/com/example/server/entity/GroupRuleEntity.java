@@ -1,11 +1,15 @@
-package com.example.server.model;
+package com.example.server.entity;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class Rule {
+public class GroupRuleEntity {
 
     private Integer id;
+
+    private Integer groupId;
 
     private Integer parentId;
 
@@ -29,7 +33,5 @@ public class Rule {
 
     private Integer status;
 
-    private String createdAt;
-
-    private String updatedAt;
+    private List<GroupRuleEntity> children;
 }
