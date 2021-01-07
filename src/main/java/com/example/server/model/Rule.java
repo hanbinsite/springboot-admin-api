@@ -19,6 +19,8 @@ public class Rule {
 
     private String redirect;
 
+    private String api;
+
     private String title;
 
     private String icon;
