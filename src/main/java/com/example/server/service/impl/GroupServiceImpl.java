@@ -13,11 +13,17 @@ import com.example.server.utils.DateUtils;
 import com.example.server.verify.group.GroupVo;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * @author 韩彬
+ */
 @Service
+@Slf4j
 public class GroupServiceImpl implements GroupService {
 
     private final GroupMapper groupMapper;
@@ -47,6 +53,7 @@ public class GroupServiceImpl implements GroupService {
      * @return bool
      */
     @Override
+    @Transactional
     public Boolean addGroup(GroupVo groupVo) {
         Group group = new Group();
         group.setName(groupVo.getName());
@@ -59,7 +66,7 @@ public class GroupServiceImpl implements GroupService {
         if (id == null) {
             throw new ApiException(ResultEnum.FAIL.getCode(), "分组新增失败,请稍后重试");
         }
-        Integer groupRuleId = groupRuleMapper.addGroupRules(id, groupVo.getRules());
+        Integer has = groupRuleMapper.addGroupRules(group.getId(), groupVo.getRules());
         return true;
     }
 

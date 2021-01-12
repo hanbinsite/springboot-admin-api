@@ -40,6 +40,12 @@ public interface GroupRuleMapper {
     GroupRuleEntity getRuleByApiAndGroupId(String api, Integer groupId);
 
 
+    /**
+     * 新增分组-权限记录
+     * @param groupId 分组id
+     * @param routes 权限id
+     * @return Integer
+     */
     @Insert("<script> " +
             "INSERT INTO `group_rules` (`group_id`, `rule_id`) VALUES" +
             "  <foreach collection =\"routes\" item=\"item\" index= \"index\" separator =\",\"> " +
@@ -47,7 +53,7 @@ public interface GroupRuleMapper {
             "  #{groupId}, #{item}   " +
             ")" +
             " </foreach >  " +
-            "ON DUPLICATE KEY UPDATE  id = id " +
+//            "ON DUPLICATE KEY UPDATE  id = id " +
             "</script>")
     Integer addGroupRules(Integer groupId, List<String> routes);
 

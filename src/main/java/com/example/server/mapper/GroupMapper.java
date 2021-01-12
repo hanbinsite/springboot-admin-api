@@ -34,4 +34,13 @@ public interface GroupMapper {
             "(#{name}, #{description}, #{isSuper}, #{status}, #{createdAt}, #{updatedAt})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     Integer addGroup(Group group);
+
+
+    /**
+     * 删除分组
+     * @param groupId groupId
+     * @return int
+     */
+    @Delete("DELETE FROM `groups` WHERE `ID` = #{groupId}")
+    Integer delGroup(Integer groupId);
 }
