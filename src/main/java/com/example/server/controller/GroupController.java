@@ -1,11 +1,14 @@
 package com.example.server.controller;
 
 import com.example.server.common.page.model.PageConfig;
+import com.example.server.common.result.utils.ResultUtils;
 import com.example.server.service.impl.GroupServiceImpl;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.server.verify.group.GroupVo;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/group")
@@ -25,5 +28,21 @@ public class GroupController {
                             @RequestParam(value = "name", required = false, defaultValue = "") String name) {
         PageConfig pageConfig = new PageConfig(pageNum, pageSize);
         return groupService.getGroupPage(pageConfig, status, name);
+    }
+
+
+    /**
+     * 新增分组
+     * @param groupVo groupVo
+     * @return ResultUtils
+     */
+    @PostMapping("/add")
+    public Object add(@RequestBody @Validated GroupVo groupVo) {
+        Boolean bool = groupService.addGroup(groupVo);
+        if (bool) {
+            return ResultUtils.successOnlyMsg("新增成功");
+        } else {
+            return ResultUtils.error("新增失败，请稍后重试");
+        }
     }
 }

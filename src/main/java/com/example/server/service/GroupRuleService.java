@@ -22,4 +22,11 @@ public interface GroupRuleService {
      * @return GroupRuleEntity
      */
     Boolean getRuleByApiAndGroupId(String api, Integer groupId);
+
+    /**
+     * 根据管理员所在分组id与父级获得下级所有菜单
+     * @param token 管理员token
+     * @return List<Rule>
+     */
+    List<GroupRuleEntity> getMyRule(String token);
 }

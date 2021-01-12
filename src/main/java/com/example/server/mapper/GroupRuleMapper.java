@@ -2,10 +2,7 @@ package com.example.server.mapper;
 
 import com.example.server.entity.GroupRuleEntity;
 import com.example.server.model.Rule;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -41,5 +38,17 @@ public interface GroupRuleMapper {
             @Result(property = "activeMenu", column = "active_menu")
     })
     GroupRuleEntity getRuleByApiAndGroupId(String api, Integer groupId);
+
+
+    @Insert("<script> " +
+            "INSERT INTO `group_rules` (`group_id`, `rule_id`) VALUES" +
+            "  <foreach collection =\"routes\" item=\"item\" index= \"index\" separator =\",\"> " +
+            "(" +
+            "  #{groupId}, #{item}   " +
+            ")" +
+            " </foreach >  " +
+            "ON DUPLICATE KEY UPDATE  id = id " +
+            "</script>")
+    Integer addGroupRules(Integer groupId, List<String> routes);
 
 }

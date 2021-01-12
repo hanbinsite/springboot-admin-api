@@ -14,7 +14,9 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Component
 public class JwtUtils {
@@ -57,6 +59,11 @@ public class JwtUtils {
     }
 
     public Boolean verifyRule(String url, String token) {
+        List<String> extUrl = new ArrayList<>();
+        extUrl.add("/admin/info");
+        if (extUrl.contains(url)) {
+            return true;
+        }
         Object cache = redisUtils.get("admin:token:" + token);
         if (cache == null) {
             return false;
@@ -65,6 +72,9 @@ public class JwtUtils {
         Admin admin = adminService.getAdminById(Integer.parseInt(id));
         if (admin == null) {
             return false;
+        }
+        if (admin.getIsSuper() == 1) {
+            return true;
         }
         return groupRuleService.getRuleByApiAndGroupId(url, admin.getGroupId());
     }

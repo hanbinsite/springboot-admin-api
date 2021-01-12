@@ -2,6 +2,7 @@ package com.example.server.service;
 
 import com.example.server.common.page.model.PageConfig;
 import com.example.server.common.page.model.PageResult;
+import com.example.server.verify.group.GroupVo;
 
 public interface GroupService {
 
@@ -13,4 +14,11 @@ public interface GroupService {
      * @return PageResult
      */
     PageResult getGroupPage(PageConfig pageConfig, Integer status, String name);
+
+    /**
+     * 新增分组
+     * @param groupVo 参数
+     * @return bool
+     */
+    Boolean addGroup(GroupVo groupVo);
 }

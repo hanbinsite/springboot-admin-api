@@ -2,6 +2,8 @@ package com.example.server.service;
 
 import com.example.server.model.Admin;
 
+import java.util.Map;
+
 public interface AdminService {
 
     /**
@@ -25,4 +27,11 @@ public interface AdminService {
      * @return admin
      */
     Admin getAdminById(Integer id);
+
+    /**
+     * 获得管理员详细信息
+     * @param token token
+     * @return Map
+     */
+    Map<String, String> getAdminInfo(String token);
 }

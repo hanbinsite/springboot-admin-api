@@ -7,6 +7,9 @@ import com.example.server.utils.JwtUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -27,6 +30,17 @@ public class AdminController {
         String token = jwtUtils.getToken(admin);
         String menu = "这里有可能返回该用户所有权限菜单";
         return token;
+    }
+
+    /**
+     * 获得管理员用户名等详细信息
+     * @param request  HttpServletRequest
+     * @return getAdminInfo
+     */
+    @RequestMapping("info")
+    public Object info(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+        return adminService.getAdminInfo(token);
     }
 
     @RequestMapping("/logout")

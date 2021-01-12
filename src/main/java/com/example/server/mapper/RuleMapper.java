@@ -1,5 +1,6 @@
 package com.example.server.mapper;
 
+import com.example.server.entity.GroupRuleEntity;
 import com.example.server.model.Rule;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
@@ -22,9 +23,7 @@ public interface RuleMapper {
     @Results({
             @Result(property = "parentId", column = "parent_id"),
             @Result(property = "noCache", column = "no_cache"),
-            @Result(property = "activeMenu", column = "active_menu"),
-            @Result(property = "createdAt", column = "created_at"),
-            @Result(property = "updatedAt", column = "updated_at")
+            @Result(property = "activeMenu", column = "active_menu")
     })
-    List<Rule> getRuleByParentId(Integer parentId);
+    List<GroupRuleEntity> getRuleByParentId(Integer parentId);
 }
