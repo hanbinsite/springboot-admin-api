@@ -5,6 +5,7 @@ import com.example.server.exception.ApiException;
 import com.example.server.exception.NotLoginException;
 import com.example.server.utils.JwtUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,12 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+
+        // 如果不是映射到方法直接通过
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
+
         String token = request.getHeader("Authorization");
         if (token == null) {
             throw new NotLoginException();
