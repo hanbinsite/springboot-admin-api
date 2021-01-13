@@ -43,4 +43,26 @@ public interface GroupMapper {
      */
     @Delete("DELETE FROM `groups` WHERE `ID` = #{groupId}")
     Integer delGroup(Integer groupId);
+
+
+    /**
+     * 根据id获得分组详情
+     * @param id 分组id
+     * @return group
+     */
+    @Select("SELECT * FROM `groups` WHERE `id` = #{id}")
+    @Results({
+            @Result(property = "isSuper", column = "is_super"),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at")
+    })
+    Group getGroupById(Integer id);
+
+    /**
+     * 更新分组信息
+     * @param group group
+     * @return Integer
+     */
+    @Update("UPDATE `groups` SET `name` = #{name}, `description` = #{description}, `updated_at` = #{updatedAt} WHERE `id` = #{id}")
+    Integer editGroup(Group group);
 }

@@ -71,6 +71,56 @@ public class GroupServiceImpl implements GroupService {
     }
 
     /**
+     * 删除分组
+     *
+     * @param id 分组id
+     * @return bool
+     */
+    @Override
+    @Transactional
+    public Boolean delGroup(Integer id) {
+        Integer delGroup = groupMapper.delGroup(id);
+        if (delGroup == null || delGroup < 1) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "分组删除失败");
+        }
+        Integer delGroupRule = groupRuleMapper.delGroupRules(id);
+        if ( delGroupRule == null || delGroupRule < 1) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "分组删除失败");
+        }
+        return true;
+    }
+
+    /**
+     * 编辑分组
+     *
+     * @param id      分组id
+     * @param groupVo 提交内容
+     * @return Boolean
+     */
+    @Override
+    @Transactional
+    public Boolean editGroup(Integer id, GroupVo groupVo) {
+        Group group = groupMapper.getGroupById(id);
+        if (group == null) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "分组不存在");
+        }
+        group.setName(groupVo.getName());
+        group.setDescription(groupVo.getDescription());
+        group.setUpdatedAt(DateUtils.getNowTime());
+
+        Integer bool = groupMapper.editGroup(group);
+        if (bool < 1) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "分组保存失败");
+        }
+        Integer delGroupRule = groupRuleMapper.delGroupRules(id);
+        if ( delGroupRule == null || delGroupRule < 1) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "分组删除失败");
+        }
+        Integer has = groupRuleMapper.addGroupRules(group.getId(), groupVo.getRules());
+        return true;
+    }
+
+    /**
      * 调用分页插件完成分页
      * @param pageConfig PageConfig
      * @return PageInfo

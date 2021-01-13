@@ -21,4 +21,19 @@ public interface GroupService {
      * @return bool
      */
     Boolean addGroup(GroupVo groupVo);
+
+    /**
+     * 删除分组
+     * @param id 分组id
+     * @return bool
+     */
+    Boolean delGroup(Integer id);
+
+    /**
+     * 编辑分组
+     * @param id 分组id
+     * @param groupVo 提交内容
+     * @return Boolean
+     */
+    Boolean editGroup(Integer id, GroupVo groupVo);
 }

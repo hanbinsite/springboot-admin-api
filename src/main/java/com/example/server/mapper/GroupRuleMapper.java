@@ -57,4 +57,12 @@ public interface GroupRuleMapper {
             "</script>")
     Integer addGroupRules(Integer groupId, List<String> routes);
 
+    /**
+     * 根据分组id删除所有关联
+     * @param groupId 分组id
+     * @return int
+     */
+    @Delete("DELETE FROM `group_rules` WHERE `group_id` = #{groupId}")
+    Integer delGroupRules(Integer groupId);
+
 }

@@ -45,4 +45,29 @@ public class GroupController {
             return ResultUtils.error("新增失败，请稍后重试");
         }
     }
+
+    /**
+     * 删除分组
+     * @param id 分组id
+     * @return object
+     */
+    @RequestMapping("/del/{id}")
+    public Object del(@PathVariable Integer id) {
+        Boolean del = groupService.delGroup(id);
+        if (del) {
+            return ResultUtils.successOnlyMsg("删除成功");
+        } else {
+            return ResultUtils.error("删除失败,请稍后重试");
+        }
+    }
+
+    @RequestMapping("/edit/{id}")
+    public Object edit(@PathVariable Integer id, @RequestBody @Validated GroupVo groupVo) {
+        Boolean bool = groupService.editGroup(id, groupVo);
+        if (bool) {
+            return ResultUtils.successOnlyMsg("保存成功");
+        } else {
+            return ResultUtils.error("保存失败,请稍后重试");
+        }
+    }
 }

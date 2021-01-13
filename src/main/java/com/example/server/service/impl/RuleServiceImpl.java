@@ -27,6 +27,7 @@ public class RuleServiceImpl implements RuleService {
         list.forEach(item-> {
             List<GroupRuleEntity> child = ruleMapper.getRuleByParentId(item.getId());
             item.setChildren(child);
+
         });
         return list;
     }

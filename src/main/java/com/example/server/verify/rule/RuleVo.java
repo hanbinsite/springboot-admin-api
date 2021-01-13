@@ -1,15 +1,9 @@
-package com.example.server.entity;
+package com.example.server.verify.rule;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class GroupRuleEntity {
-
-    private Integer id;
-
-    private Integer groupId;
+public class RuleVo {
 
     private Integer parentId;
 
@@ -38,7 +32,5 @@ public class GroupRuleEntity {
     private Integer sort;
 
     private Integer status;
-
-    private List<GroupRuleEntity> children;
 
 }

@@ -36,8 +36,8 @@ public class GroupRuleServiceImpl implements GroupRuleService {
         List<GroupRuleEntity> list = groupRuleMapper.getRuleByParentIdAndGroupId(parentId, groupId);
         list.forEach(item-> {
             List<GroupRuleEntity> child = getRuleByParentIdAndGroupId(item.getId(), groupId);
-            item.setGroupId(groupId);
             item.setChildren(child);
+            item.setGroupId(groupId);
         });
         return list;
     }
