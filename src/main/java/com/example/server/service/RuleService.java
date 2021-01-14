@@ -1,9 +1,13 @@
 package com.example.server.service;
 
 import com.example.server.entity.GroupRuleEntity;
+import com.example.server.verify.rule.RuleVo;
 
 import java.util.List;
 
+/**
+ * @author hanbin
+ */
 public interface RuleService {
 
     /**
@@ -11,4 +15,10 @@ public interface RuleService {
      * @return List
      */
     List<GroupRuleEntity> allRule();
+
+    /**
+     * 新增权限
+     * @param ruleVo 权限
+     */
+    void addRule(RuleVo ruleVo);
 }

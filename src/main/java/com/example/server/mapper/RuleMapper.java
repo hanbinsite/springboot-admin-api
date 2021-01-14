@@ -2,14 +2,14 @@ package com.example.server.mapper;
 
 import com.example.server.entity.GroupRuleEntity;
 import com.example.server.model.Rule;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+/**
+ * @author hanbin
+ */
 @Component
 @Mapper
 public interface RuleMapper {
@@ -26,4 +26,15 @@ public interface RuleMapper {
             @Result(property = "activeMenu", column = "active_menu")
     })
     List<GroupRuleEntity> getRuleByParentId(Integer parentId);
+
+    /**
+     * 新增权限
+     * @param rule 权限
+     * @return int
+     */
+    @Insert("INSERT INTO `rules` (`parent_id`, `name`, `path`, `component`, `hidden`, `redirect`, `api`, `title`," +
+            " `icon`, `affix`, `no_cache`, `active_menu`, `sort`, `status`, `created_at`, `updated_at`) VALUE" +
+            " (#{parentId}, #{name}, #{path}, #{component}, #{hidden}, #{redirect}, #{api}, #{title}, #{icon}," +
+            " #{affix}, #{noCache}, #{activeMenu}, #{sort}, #{status}, #{createdAt}, #{updatedAt})")
+    Integer addRule(Rule rule);
 }

@@ -1,7 +1,11 @@
 package com.example.server.model;
 
+import com.example.server.utils.DateUtils;
 import lombok.Data;
 
+/**
+ * @author hanbin
+ */
 @Data
 public class Rule {
 
@@ -38,4 +42,48 @@ public class Rule {
     private String createdAt;
 
     private String updatedAt;
+
+    public Rule() {
+    }
+
+    public Rule(Integer parentId, String name, String path, String component, Integer hidden, String redirect, String api, String title, String icon, Integer affix, Integer noCache, String activeMenu, Integer sort, Integer status) {
+        this.parentId = parentId;
+        this.name = name;
+        this.path = path;
+        this.component = component;
+        this.hidden = hidden;
+        this.redirect = redirect;
+        this.api = api;
+        this.title = title;
+        this.icon = icon;
+        this.affix = affix;
+        this.noCache = noCache;
+        this.activeMenu = activeMenu;
+        this.sort = sort;
+        this.status = status;
+        this.createdAt = DateUtils.getNowTime();
+        this.updatedAt = DateUtils.getNowTime();
+    }
+
+
+
+    public Rule(Integer id, Integer parentId, String name, String path, String component, Integer hidden, String redirect, String api, String title, String icon, Integer affix, Integer noCache, String activeMenu, Integer sort, Integer status, String createdAt, String updatedAt) {
+        this.id = id;
+        this.parentId = parentId;
+        this.name = name;
+        this.path = path;
+        this.component = component;
+        this.hidden = hidden;
+        this.redirect = redirect;
+        this.api = api;
+        this.title = title;
+        this.icon = icon;
+        this.affix = affix;
+        this.noCache = noCache;
+        this.activeMenu = activeMenu;
+        this.sort = sort;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

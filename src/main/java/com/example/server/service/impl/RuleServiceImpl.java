@@ -1,12 +1,20 @@
 package com.example.server.service.impl;
 
+import com.example.server.common.result.enums.ResultEnum;
 import com.example.server.entity.GroupRuleEntity;
+import com.example.server.exception.ApiException;
 import com.example.server.mapper.RuleMapper;
+import com.example.server.model.Rule;
 import com.example.server.service.RuleService;
+import com.example.server.utils.DateUtils;
+import com.example.server.verify.rule.RuleVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * @author hanbin
+ */
 @Service
 public class RuleServiceImpl implements RuleService {
 
@@ -30,5 +38,19 @@ public class RuleServiceImpl implements RuleService {
 
         });
         return list;
+    }
+
+    /**
+     * 新增权限
+     *
+     * @param ruleVo 权限
+     */
+    @Override
+    public void addRule(RuleVo ruleVo) {
+        Rule rule = new Rule(ruleVo.getParentId(), ruleVo.getName(), ruleVo.getPath(), ruleVo.getComponent(), ruleVo.getHidden(), ruleVo.getRedirect(), ruleVo.getApi(), ruleVo.getTitle(), ruleVo.getIcon(), ruleVo.getAffix(), ruleVo.getNoCache(), ruleVo.getActiveMenu(), ruleVo.getSort(), ruleVo.getStatus());
+        Integer bool = ruleMapper.addRule(rule);
+        if (bool == 0) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "权限新增失败，请稍后重试");
+        }
     }
 }
