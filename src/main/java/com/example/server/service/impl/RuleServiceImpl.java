@@ -47,10 +47,25 @@ public class RuleServiceImpl implements RuleService {
      */
     @Override
     public void addRule(RuleVo ruleVo) {
-        Rule rule = new Rule(ruleVo.getParentId(), ruleVo.getName(), ruleVo.getPath(), ruleVo.getComponent(), ruleVo.getHidden(), ruleVo.getRedirect(), ruleVo.getApi(), ruleVo.getTitle(), ruleVo.getIcon(), ruleVo.getAffix(), ruleVo.getNoCache(), ruleVo.getActiveMenu(), ruleVo.getSort(), ruleVo.getStatus());
+        Rule rule = new Rule(ruleVo.getParentId(), ruleVo.getName(), ruleVo.getPath(), ruleVo.getComponent(),
+                ruleVo.getHidden(), ruleVo.getRedirect(), ruleVo.getApi(), ruleVo.getTitle(), ruleVo.getIcon(),
+                ruleVo.getAffix(), ruleVo.getNoCache(), ruleVo.getActiveMenu(), ruleVo.getSort(), ruleVo.getStatus());
         Integer bool = ruleMapper.addRule(rule);
         if (bool == 0) {
             throw new ApiException(ResultEnum.FAIL.getCode(), "权限新增失败，请稍后重试");
+        }
+    }
+
+    /**
+     * 删除权限
+     *
+     * @param id id
+     */
+    @Override
+    public void delRule(Integer id) {
+        Integer bool = ruleMapper.delRule(id);
+        if (bool == 0) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "权限删除失败，请稍后重试");
         }
     }
 }

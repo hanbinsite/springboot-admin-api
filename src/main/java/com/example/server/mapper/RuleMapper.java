@@ -37,4 +37,12 @@ public interface RuleMapper {
             " (#{parentId}, #{name}, #{path}, #{component}, #{hidden}, #{redirect}, #{api}, #{title}, #{icon}," +
             " #{affix}, #{noCache}, #{activeMenu}, #{sort}, #{status}, #{createdAt}, #{updatedAt})")
     Integer addRule(Rule rule);
+
+    /**
+     * 删除菜单
+     * @param id id
+     * @return Integer
+     */
+    @Delete("DELETE FROM `rules` WHERE `id` = #{id}")
+    Integer delRule(Integer id);
 }

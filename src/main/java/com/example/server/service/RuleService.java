@@ -21,4 +21,10 @@ public interface RuleService {
      * @param ruleVo 权限
      */
     void addRule(RuleVo ruleVo);
+
+    /**
+     * 删除权限
+     * @param id id
+     */
+    void delRule(Integer id);
 }
