@@ -13,9 +13,10 @@ public interface RuleService {
 
     /**
      * 获得所有菜单， 按照子级父级关系，无分页
+     * @param parentId 上级id
      * @return List
      */
-    List<GroupRuleEntity> allRule();
+    List<GroupRuleEntity> allRule(Integer parentId);
 
     /**
      * 新增权限

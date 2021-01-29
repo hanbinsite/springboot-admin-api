@@ -25,7 +25,7 @@ public class RuleController {
 
     @RequestMapping("/all/list")
     public Object allRule() {
-        return ruleService.allRule();
+        return ruleService.allRule(0);
     }
 
     @RequestMapping("/add")

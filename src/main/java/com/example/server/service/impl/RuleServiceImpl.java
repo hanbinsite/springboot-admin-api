@@ -30,10 +30,10 @@ public class RuleServiceImpl implements RuleService {
      * @return List
      */
     @Override
-    public List<GroupRuleEntity> allRule() {
-        List<GroupRuleEntity> list = ruleMapper.getRuleByParentId(0);
+    public List<GroupRuleEntity> allRule(Integer parentId) {
+        List<GroupRuleEntity> list = ruleMapper.getRuleByParentId(parentId);
         list.forEach(item-> {
-            List<GroupRuleEntity> child = ruleMapper.getRuleByParentId(item.getId());
+            List<GroupRuleEntity> child = allRule(item.getId());
             item.setChildren(child);
 
         });
