@@ -1,6 +1,7 @@
 package com.example.server.service;
 
 import com.example.server.entity.GroupRuleEntity;
+import com.example.server.model.Rule;
 import com.example.server.verify.rule.RuleVo;
 
 import java.util.List;
@@ -27,4 +28,18 @@ public interface RuleService {
      * @param id id
      */
     void delRule(Integer id);
+
+    /**
+     * 获得权限详情
+     * @param id 权限id
+     * @return rule
+     */
+    Rule infoRule(Integer id);
+
+    /**
+     * 编辑权限
+     * @param id 权限id
+     * @param ruleVo 权限
+     */
+    void editRule(Integer id, RuleVo ruleVo);
 }

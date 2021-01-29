@@ -1,12 +1,11 @@
 package com.example.server.controller;
 
+import com.example.server.common.result.utils.ResultUtils;
 import com.example.server.entity.GroupRuleEntity;
 import com.example.server.service.impl.RuleServiceImpl;
 import com.example.server.verify.rule.RuleVo;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,6 +31,23 @@ public class RuleController {
     @RequestMapping("/add")
     public Object addRule(@RequestBody @Validated RuleVo ruleVo) {
         ruleService.addRule(ruleVo);
-        return "新增成功";
+        return ResultUtils.successOnlyMsg("新增成功");
+    }
+
+    @RequestMapping("/info/{id}")
+    public Object info(@PathVariable Integer id) {
+        return ruleService.infoRule(id);
+    }
+
+    @RequestMapping("/edit/{id}")
+    public Object edit(@PathVariable Integer id, @RequestBody @Validated RuleVo ruleVo) {
+        ruleService.editRule(id, ruleVo);
+        return ResultUtils.successOnlyMsg("编辑成功");
+    }
+
+    @RequestMapping("/del/{id}")
+    public Object del(@PathVariable Integer id) {
+        ruleService.delRule(id);
+        return ResultUtils.successOnlyMsg("删除成功");
     }
 }

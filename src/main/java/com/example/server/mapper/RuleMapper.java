@@ -2,6 +2,7 @@ package com.example.server.mapper;
 
 import com.example.server.entity.GroupRuleEntity;
 import com.example.server.model.Rule;
+import com.example.server.verify.rule.RuleVo;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -45,4 +46,28 @@ public interface RuleMapper {
      */
     @Delete("DELETE FROM `rules` WHERE `id` = #{id}")
     Integer delRule(Integer id);
+
+    /**
+     * 获得权限详情
+     * @param id 权限id
+     * @return rule
+     */
+    @Select("SELECT * FROM `rules` WHERE `id` = #{id}")
+    @Results({
+            @Result(property = "parentId", column = "parent_id"),
+            @Result(property = "noCache", column = "no_cache"),
+            @Result(property = "activeMenu", column = "active_menu")
+    })
+    Rule infoRule(Integer id);
+
+    /**
+     * 编辑权限
+     * @param rule rule
+     * @return int
+     */
+    @Update("UPDATE `rules` SET `parent_id` = #{parentId}, `name` = #{name}, `path` = #{path}, `component` = " +
+            "#{component}, `hidden` = #{hidden}, `redirect` = #{redirect}, `api` = #{api}, `title` = #{title}, " +
+            "`icon` = #{icon}, `affix` = #{affix}, `no_cache` = #{noCache}, `active_menu` = #{activeMenu}, `sort` =" +
+            " #{sort}, `status` = #{status}, `updated_at` = #{updatedAt} WHERE `id` = #{id}")
+    Integer editRule(Rule rule);
 }

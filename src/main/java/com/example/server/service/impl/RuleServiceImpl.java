@@ -68,4 +68,36 @@ public class RuleServiceImpl implements RuleService {
             throw new ApiException(ResultEnum.FAIL.getCode(), "权限删除失败，请稍后重试");
         }
     }
+
+    /**
+     * 获得权限详情
+     *
+     * @param id 权限id
+     * @return rule
+     */
+    @Override
+    public Rule infoRule(Integer id) {
+        Rule rule = ruleMapper.infoRule(id);
+        if (rule == null) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "菜单不存在");
+        }
+        return rule;
+    }
+
+    /**
+     * 编辑权限
+     *
+     * @param id     权限id
+     * @param ruleVo 权限
+     */
+    @Override
+    public void editRule(Integer id, RuleVo ruleVo) {
+        Rule rule = new Rule(id, ruleVo.getParentId(), ruleVo.getName(), ruleVo.getPath(), ruleVo.getComponent(),
+                ruleVo.getHidden(), ruleVo.getRedirect(), ruleVo.getApi(), ruleVo.getTitle(), ruleVo.getIcon(),
+                ruleVo.getAffix(), ruleVo.getNoCache(), ruleVo.getActiveMenu(), ruleVo.getSort(), ruleVo.getStatus());
+        Integer bool = ruleMapper.editRule(rule);
+        if (bool == 0) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "菜单编辑失败");
+        }
+    }
 }

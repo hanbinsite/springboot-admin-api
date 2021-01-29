@@ -67,7 +67,7 @@ public class Rule {
 
 
 
-    public Rule(Integer id, Integer parentId, String name, String path, String component, Integer hidden, String redirect, String api, String title, String icon, Integer affix, Integer noCache, String activeMenu, Integer sort, Integer status, String createdAt, String updatedAt) {
+    public Rule(Integer id, Integer parentId, String name, String path, String component, Integer hidden, String redirect, String api, String title, String icon, Integer affix, Integer noCache, String activeMenu, Integer sort, Integer status) {
         this.id = id;
         this.parentId = parentId;
         this.name = name;
@@ -83,7 +83,7 @@ public class Rule {
         this.activeMenu = activeMenu;
         this.sort = sort;
         this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.createdAt = DateUtils.getNowTime();
+        this.updatedAt = DateUtils.getNowTime();
     }
 }
