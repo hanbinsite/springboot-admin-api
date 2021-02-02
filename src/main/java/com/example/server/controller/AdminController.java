@@ -1,5 +1,6 @@
 package com.example.server.controller;
 
+import com.example.server.common.result.utils.ResultUtils;
 import com.example.server.verify.admin.AdminLoginVo;
 import com.example.server.model.Admin;
 import com.example.server.service.impl.AdminServiceImpl;
@@ -60,7 +61,8 @@ public class AdminController {
 
     @RequestMapping("/add")
     public Object addAdmin(@RequestBody @Validated AdminVo adminVo) {
-        return "新增管理员";
+        adminService.addAdmin(adminVo);
+        return ResultUtils.successOnlyMsg("新增成功");
     }
 
     /**
@@ -70,20 +72,33 @@ public class AdminController {
      */
     @RequestMapping("/del/{id}")
     public Object delAdmin(@PathVariable Integer id) {
-        return "删除管理员";
+        adminService.delAdmin(id);
+        return ResultUtils.successOnlyMsg("删除成功");
     }
 
     @RequestMapping("/edit/{id}")
     public Object editAdmin(@PathVariable Integer id, @RequestBody @Validated AdminVo adminVo) {
-        return "编辑管理员";
+        adminService.editAdmin(id, adminVo);
+        return ResultUtils.successOnlyMsg("编辑成功");
     }
 
     @RequestMapping("/info/id/{id}")
     public Object getInfoAdmin(@PathVariable Integer id) {
-        return "获得管理员详情";
+        Admin admin = adminService.getAdminById(id);
+        if (admin == null) {
+            return ResultUtils.error("管理员不存在，请检查后重试");
+        }
+        return admin;
     }
-    @RequestMapping("/status")
+    @RequestMapping("/edit/status")
     public Object editAdminStatus(@RequestParam(value = "id") Integer id, @RequestParam(value = "status") Integer status) {
-        return "编辑管理员状态";
+        adminService.editAdminStatus(id, status);
+        return ResultUtils.successOnlyMsg("状态编辑成功");
+    }
+
+    @RequestMapping("/edit/password")
+    public Object editAdminPassword(@RequestParam(value = "id") Integer id, @RequestParam(value = "status") String password) {
+        adminService.editAdminPassword(id, password);
+        return ResultUtils.successOnlyMsg("密码编辑成功");
     }
 }
