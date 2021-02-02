@@ -78,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
         Object cache = redisUtils.get("admin:token:" + token);
         String id = cache.toString();
         Admin admin = getAdminById(Integer.parseInt(id));
-        Map<String, String> info = new HashMap<>();
+        Map<String, String> info = new HashMap<>(6);
         info.put("name", admin.getNickname());
         info.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
         info.put("introduction", "这是一个简介");

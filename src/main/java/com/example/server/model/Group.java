@@ -2,6 +2,9 @@ package com.example.server.model;
 
 import lombok.Data;
 
+/**
+ * @author hanbin
+ */
 @Data
 public class Group {
 

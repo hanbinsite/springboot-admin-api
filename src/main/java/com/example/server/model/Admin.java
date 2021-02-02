@@ -3,6 +3,9 @@ package com.example.server.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+/**
+ * @author hanbin
+ */
 @Data
 public class Admin {
 

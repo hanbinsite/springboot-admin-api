@@ -4,12 +4,17 @@ import com.example.server.verify.admin.AdminLoginVo;
 import com.example.server.model.Admin;
 import com.example.server.service.impl.AdminServiceImpl;
 import com.example.server.utils.JwtUtils;
+import com.example.server.verify.admin.AdminVo;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
+/**
+ * @author hanbin
+ */
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -51,5 +56,30 @@ public class AdminController {
     @RequestMapping("/refresh_token")
     public Object refreshToken() {
         return "刷新token";
+    }
+
+    @RequestMapping("/add")
+    public Object addAdmin(@RequestBody @Validated AdminVo adminVo) {
+        return "新增管理员";
+    }
+
+    /**
+     * 删除管理员
+     * @param id 管理员id
+     * @return Object
+     */
+    @RequestMapping("/del/{id}")
+    public Object delAdmin(@PathVariable Integer id) {
+        return "删除管理员";
+    }
+
+    @RequestMapping("/edit/{id}")
+    public Object editAdmin(@PathVariable Integer id, @RequestBody @Validated AdminVo adminVo) {
+        return "编辑管理员";
+    }
+
+    @RequestMapping("/info/id/{id}")
+    public Object getInfoAdmin(@PathVariable Integer id) {
+        return "获得管理员详情";
     }
 }
