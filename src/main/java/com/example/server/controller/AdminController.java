@@ -82,4 +82,8 @@ public class AdminController {
     public Object getInfoAdmin(@PathVariable Integer id) {
         return "获得管理员详情";
     }
+    @RequestMapping("/status")
+    public Object editAdminStatus(@RequestParam(value = "id") Integer id, @RequestParam(value = "status") Integer status) {
+        return "编辑管理员状态";
+    }
 }

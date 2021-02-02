@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * @author hanbin
+ */
 @Component
 public class PasswordUtils {
 
@@ -28,7 +31,7 @@ public class PasswordUtils {
     public static Map<String, String> generalPassword(String password) {
         String salt = getRandomString(6);
         String md5 = encryption(password, salt);
-        Map<String, String> result = new HashMap<>();
+        Map<String, String> result = new HashMap<>(3);
         result.put("password", md5);
         result.put("salt", salt);
         return result;

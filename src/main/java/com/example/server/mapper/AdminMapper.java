@@ -4,6 +4,9 @@ import com.example.server.model.Admin;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author hanbin
+ */
 @Component
 @Mapper
 public interface AdminMapper {
@@ -23,6 +26,21 @@ public interface AdminMapper {
     Admin getAdminByUsername(String username);
 
     /**
+     * 根据用户名获得管理员详情
+     * @param username 用户名
+     * @param id 管理员
+     * @return Admin
+     */
+    @Select("SELECT * FROM admin WHERE `username` = #{username} AND `id` != #{id}")
+    @Results({
+            @Result(property = "isSuper", column = "is_super"),
+            @Result(property = "groupId", column = "group_id"),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at")
+    })
+    Admin getAdminByUsernameExit(String username, Integer id);
+
+    /**
      * 根据手机号获得管理员详情
      * @param mobile 手机号
      * @return Admin
@@ -35,6 +53,21 @@ public interface AdminMapper {
             @Result(property = "updatedAt", column = "updated_at")
     })
     Admin getAdminByMobile(String mobile);
+
+    /**
+     * 根据手机号获得管理员详情
+     * @param mobile 手机号
+     * @param id 手机号
+     * @return Admin
+     */
+    @Select("SELECT * FROM admin WHERE `mobile` = #{mobile} AND `id` != #{id}")
+    @Results({
+            @Result(property = "isSuper", column = "is_super"),
+            @Result(property = "groupId", column = "group_id"),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at")
+    })
+    Admin getAdminByMobileExit(String mobile, Integer id);
 
     /**
      * 根据用户名、手机号获得管理员详情

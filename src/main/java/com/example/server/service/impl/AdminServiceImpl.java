@@ -5,14 +5,19 @@ import com.example.server.exception.ApiException;
 import com.example.server.mapper.AdminMapper;
 import com.example.server.model.Admin;
 import com.example.server.service.AdminService;
+import com.example.server.utils.DateUtils;
 import com.example.server.utils.PasswordUtils;
 import com.example.server.utils.RedisUtils;
+import com.example.server.verify.admin.AdminVo;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * @author hanbin
+ */
 @Service
 public class AdminServiceImpl implements AdminService {
 
@@ -84,5 +89,96 @@ public class AdminServiceImpl implements AdminService {
         info.put("introduction", "这是一个简介");
         info.put("roles", "admin");
         return info;
+    }
+
+    /**
+     * 新增管理员
+     *
+     * @param adminVo 管理员内容
+     */
+    @Override
+    public void addAdmin(AdminVo adminVo) {
+        Admin have = adminMapper.getAdminByUsername(adminVo.getUsername());
+        if (have != null) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "用户名已存在");
+        }
+        have = adminMapper.getAdminByMobile(adminVo.getMobile());
+        if (have != null) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "手机号已存在");
+        }
+        Map<String, String> password = PasswordUtils.generalPassword(adminVo.getPassword());
+        Admin admin = new Admin(adminVo.getIsSuper(), adminVo.getGroupId(), adminVo.getUsername(),
+                adminVo.getNickname(), password.get("password"), password.get("salt"), adminVo.getMobile(),
+                adminVo.getMail(), adminVo.getStatus());
+        Integer bool = adminMapper.addAdmin(admin);
+        if (bool <= 0) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "管理员新增失败，请检查后重试");
+        }
+    }
+
+    /**
+     * 删除管理员
+     *
+     * @param id 管理员id
+     */
+    @Override
+    public void delAdmin(Integer id) {
+        Integer bool = adminMapper.delAdmin(id);
+        if (bool <= 0) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "管理员删除失败，请检查后重试");
+        }
+    }
+
+    /**
+     * 编辑管理员
+     *
+     * @param id      管理员id
+     * @param adminVo 管理员信息
+     */
+    @Override
+    public void editAdmin(Integer id, AdminVo adminVo) {
+        Admin have = adminMapper.getAdminByUsernameExit(adminVo.getUsername(), id);
+        if (have != null) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "用户名已存在");
+        }
+        have = adminMapper.getAdminByMobileExit(adminVo.getMobile(), id);
+        if (have != null) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "手机号已存在");
+        }
+        Admin admin = new Admin(id, adminVo.getIsSuper(), adminVo.getGroupId(), adminVo.getUsername(),
+                adminVo.getNickname(), adminVo.getMobile(), adminVo.getMail(), adminVo.getStatus());
+        Integer bool = adminMapper.editAdmin(admin);
+        if (bool <= 0) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "管理员编辑失败，请检查后重试");
+        }
+    }
+
+    /**
+     * 编辑管理员状态
+     *
+     * @param id     管理员id
+     * @param status 状态
+     */
+    @Override
+    public void editAdminStatus(Integer id, Integer status) {
+        Integer bool = adminMapper.editAdminStatus(id, status, DateUtils.getNowTime());
+        if (bool <= 0) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "状态编辑失败，请检查后重试");
+        }
+    }
+
+    /**
+     * 编辑管理员密码
+     *
+     * @param id       管理员id
+     * @param password 密码
+     */
+    @Override
+    public void editAdminPassword(Integer id, String password) {
+        Map<String, String> newPassword = PasswordUtils.generalPassword(password);
+        Integer bool = adminMapper.editAdminPassword(id, newPassword.get("password"), newPassword.get("salt"), DateUtils.getNowTime());
+        if (bool <= 0) {
+            throw new ApiException(ResultEnum.FAIL.getCode(), "密码修改失败，请检查后重试");
+        }
     }
 }
