@@ -2,6 +2,7 @@ package com.example.server.controller;
 
 import com.example.server.common.page.model.PageConfig;
 import com.example.server.common.result.utils.ResultUtils;
+import com.example.server.entity.AdminEntity;
 import com.example.server.verify.admin.AdminLoginVo;
 import com.example.server.model.Admin;
 import com.example.server.service.impl.AdminServiceImpl;
@@ -85,7 +86,7 @@ public class AdminController {
 
     @RequestMapping("/info/id/{id}")
     public Object getInfoAdmin(@PathVariable Integer id) {
-        Admin admin = adminService.getAdminById(id);
+        AdminEntity admin = adminService.getInfoById(id);
         if (admin == null) {
             return ResultUtils.error("管理员不存在，请检查后重试");
         }

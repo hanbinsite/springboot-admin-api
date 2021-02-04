@@ -60,4 +60,7 @@ public class Admin {
         this.status = status;
         this.updatedAt = DateUtils.getNowTime();
     }
+
+    public Admin() {
+    }
 }

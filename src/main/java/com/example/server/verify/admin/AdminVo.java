@@ -15,7 +15,6 @@ public class AdminVo {
     private Integer isSuper;
 
     @NotNull(message = "管理员所属分组不能为空")
-    @NotEmpty(message = "管理员所属分组不能为空")
     private Integer groupId;
 
     @NotNull(message = "管理员账号不能为空")

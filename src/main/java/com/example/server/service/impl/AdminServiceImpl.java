@@ -202,6 +202,17 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
+     * 根据管理员id获得详情
+     *
+     * @param id 管理员id
+     * @return AdminEntity
+     */
+    @Override
+    public AdminEntity getInfoById(Integer id) {
+        return adminMapper.getInfoById(id);
+    }
+
+    /**
      * 调用分页插件完成分页
      * @param pageConfig PageConfig
      * @return PageInfo

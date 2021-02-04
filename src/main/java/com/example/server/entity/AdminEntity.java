@@ -16,6 +16,8 @@ public class AdminEntity {
 
     private Integer groupId;
 
+    private String groupName;
+
     private String username;
 
     private String nickname;

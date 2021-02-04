@@ -2,6 +2,7 @@ package com.example.server.service;
 
 import com.example.server.common.page.model.PageConfig;
 import com.example.server.common.page.model.PageResult;
+import com.example.server.entity.AdminEntity;
 import com.example.server.model.Admin;
 import com.example.server.verify.admin.AdminVo;
 
@@ -83,4 +84,11 @@ public interface AdminService {
      * @return PageResult
      */
     PageResult getAdminPage(PageConfig pageConfig, Integer groupId, Integer status, String search);
+
+    /**
+     * 根据管理员id获得详情
+     * @param id 管理员id
+     * @return AdminEntity
+     */
+    AdminEntity getInfoById(Integer id);
 }

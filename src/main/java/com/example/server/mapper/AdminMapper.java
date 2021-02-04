@@ -159,16 +159,33 @@ public interface AdminMapper {
      * @param status 分组名称模糊检索
      * @return List<Group>
      */
-    @Select("<script>SELECT `id`, `is_super`, `group_id`, `username`, `nickname`, `mobile`, `mail`, `status`," +
-            " `created_at`, `updated_at` FROM admin WHERE 1 = 1  <if test=\"status != -1 \"> " +
-            "AND `status` = #{status} </if>  <if test=\"search != '' \"> AND `username` like " +
-            "concat('%', #{search}, '%') AND `nickname`  like concat('%', #{search}, '%') </if>" +
-            " <if test=\"groupId != 0 \">  AND `group_id`= #{groupId}  </if></script>")
+    @Select("<script>SELECT `a`.`id`, `a`.`is_super`, `a`.`group_id`, `a`.`username`, `a`.`nickname`, `a`.`mobile`," +
+            " `a`.`mail`, `a`.`status`, `a`.`created_at`, `a`.`updated_at`, `b`.`name` as `group_name` FROM" +
+            " admin as `a` INNER JOIN `groups` as `b` ON `a`.`group_id` = `b`.`id` WHERE 1 = 1  <if test=\"status != -1 \"> " +
+            "AND `a`.`status` = #{status} </if>  <if test=\"search != '' \"> AND ( `a`.`username` like " +
+            "concat('%', #{search}, '%') OR `a`.`nickname`  like concat('%', #{search}, '%') ) </if>" +
+            " <if test=\"groupId != 0 \">  AND `a`.`group_id`= #{groupId}  </if> ORDER BY `a`.`created_at` DESC </script>")
+    @Results({
+            @Result(property = "isSuper", column = "is_super"),
+            @Result(property = "groupId", column = "group_id"),
+            @Result(property = "groupName", column = "group_name"),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at")
+    })
+    List<AdminEntity> getAdminPage(Integer groupId, String search, Integer status);
+
+    /**
+     * 根据管理员id获得详情
+     * @param id 管理员id
+     * @return admin
+     */
+    @Select("SELECT `id`, `is_super`, `group_id`, `username`, `nickname`, `mobile`, `mail`, `status`, `created_at`," +
+            " `updated_at` FROM admin WHERE id = #{id}")
     @Results({
             @Result(property = "isSuper", column = "is_super"),
             @Result(property = "groupId", column = "group_id"),
             @Result(property = "createdAt", column = "created_at"),
             @Result(property = "updatedAt", column = "updated_at")
     })
-    List<AdminEntity> getAdminPage(Integer groupId, String search, Integer status);
+    AdminEntity getInfoById(Integer id);
 }
