@@ -1,5 +1,6 @@
 package com.example.server.controller;
 
+import com.example.server.common.page.model.PageConfig;
 import com.example.server.common.result.utils.ResultUtils;
 import com.example.server.verify.admin.AdminLoginVo;
 import com.example.server.model.Admin;
@@ -100,5 +101,15 @@ public class AdminController {
     public Object editAdminPassword(@RequestParam(value = "id") Integer id, @RequestParam(value = "status") String password) {
         adminService.editAdminPassword(id, password);
         return ResultUtils.successOnlyMsg("密码编辑成功");
+    }
+
+    @RequestMapping("/page")
+    public Object getAdminPage(@RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
+                               @RequestParam(value = "pageSize", required = false, defaultValue = "20") Integer pageSize,
+                               @RequestParam(value = "search", required = false, defaultValue = "") String search,
+                               @RequestParam(value = "groupId", required = false, defaultValue = "0") Integer groupId,
+                               @RequestParam(value = "status", required = false, defaultValue = "-1") Integer status) {
+        PageConfig pageConfig = new PageConfig(pageNum, pageSize);
+        return adminService.getAdminPage(pageConfig, groupId, status, search);
     }
 }

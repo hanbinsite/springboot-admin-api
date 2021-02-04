@@ -4,6 +4,10 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * @author hanbin
+ * 管理员分组权限返回数据格式
+ */
 @Data
 public class GroupRuleEntity {
 

@@ -33,6 +33,11 @@ public class GroupController {
         return groupService.getGroupPage(pageConfig, status, name);
     }
 
+    @RequestMapping("/all")
+    public Object groupAll(@RequestParam(value = "search", required = false, defaultValue = "") String search) {
+        return groupService.groupAll(search);
+    }
+
 
     /**
      * 新增分组

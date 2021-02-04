@@ -2,8 +2,14 @@ package com.example.server.service;
 
 import com.example.server.common.page.model.PageConfig;
 import com.example.server.common.page.model.PageResult;
+import com.example.server.model.Group;
 import com.example.server.verify.group.GroupVo;
 
+import java.util.List;
+
+/**
+ * @author hanbin
+ */
 public interface GroupService {
 
     /**
@@ -14,6 +20,13 @@ public interface GroupService {
      * @return PageResult
      */
     PageResult getGroupPage(PageConfig pageConfig, Integer status, String name);
+
+    /**
+     * 获得所有管理员分组
+     * @param search 检索内容
+     * @return List<Group>
+     */
+    List<Group> groupAll(String search);
 
     /**
      * 新增分组

@@ -4,6 +4,9 @@ import com.example.server.common.page.model.PageConfig;
 import com.example.server.common.page.model.PageResult;
 import com.github.pagehelper.PageInfo;
 
+/**
+ * @author hanbin
+ */
 public class PageUtils {
     /**
      * 将分页信息封装到统一的接口

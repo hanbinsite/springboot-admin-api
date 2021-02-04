@@ -47,6 +47,17 @@ public class GroupServiceImpl implements GroupService {
     }
 
     /**
+     * 获得所有管理员分组
+     *
+     * @param search 检索内容
+     * @return List<Group>
+     */
+    @Override
+    public List<Group> groupAll(String search) {
+        return groupMapper.getGroupAll(search);
+    }
+
+    /**
      * 新增分组
      *
      * @param groupVo 参数
@@ -79,15 +90,20 @@ public class GroupServiceImpl implements GroupService {
     @Override
     @Transactional
     public Boolean delGroup(Integer id) {
-        Integer delGroup = groupMapper.delGroup(id);
-        if (delGroup == null || delGroup < 1) {
+        try {
+            Integer delGroup = groupMapper.delGroup(id);
+            if (delGroup == null || delGroup < 1) {
+                throw new ApiException(ResultEnum.FAIL.getCode(), "分组删除失败");
+            }
+            Integer delGroupRule = groupRuleMapper.delGroupRules(id);
+            if ( delGroupRule == null || delGroupRule < 1) {
+                throw new ApiException(ResultEnum.FAIL.getCode(), "分组删除失败");
+            }
+            return true;
+        } catch (Exception e) {
             throw new ApiException(ResultEnum.FAIL.getCode(), "分组删除失败");
         }
-        Integer delGroupRule = groupRuleMapper.delGroupRules(id);
-        if ( delGroupRule == null || delGroupRule < 1) {
-            throw new ApiException(ResultEnum.FAIL.getCode(), "分组删除失败");
-        }
-        return true;
+
     }
 
     /**

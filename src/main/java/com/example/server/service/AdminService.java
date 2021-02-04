@@ -1,5 +1,7 @@
 package com.example.server.service;
 
+import com.example.server.common.page.model.PageConfig;
+import com.example.server.common.page.model.PageResult;
 import com.example.server.model.Admin;
 import com.example.server.verify.admin.AdminVo;
 
@@ -71,4 +73,14 @@ public interface AdminService {
      * @param password 密码
      */
     void editAdminPassword(Integer id, String password);
+
+    /**
+     * 获得管理员分页
+     * @param pageConfig 分页配置
+     * @param groupId 分组id
+     * @param status  状态
+     * @param search  检索内容
+     * @return PageResult
+     */
+    PageResult getAdminPage(PageConfig pageConfig, Integer groupId, Integer status, String search);
 }

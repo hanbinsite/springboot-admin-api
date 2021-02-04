@@ -1,17 +1,25 @@
 package com.example.server.service.impl;
 
+import com.example.server.common.page.model.PageConfig;
+import com.example.server.common.page.model.PageResult;
+import com.example.server.common.page.utils.PageUtils;
 import com.example.server.common.result.enums.ResultEnum;
+import com.example.server.entity.AdminEntity;
 import com.example.server.exception.ApiException;
 import com.example.server.mapper.AdminMapper;
 import com.example.server.model.Admin;
+import com.example.server.model.Group;
 import com.example.server.service.AdminService;
 import com.example.server.utils.DateUtils;
 import com.example.server.utils.PasswordUtils;
 import com.example.server.utils.RedisUtils;
 import com.example.server.verify.admin.AdminVo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -180,5 +188,29 @@ public class AdminServiceImpl implements AdminService {
         if (bool <= 0) {
             throw new ApiException(ResultEnum.FAIL.getCode(), "密码修改失败，请检查后重试");
         }
+    }
+
+    /**
+     * 获得用户分页
+     *
+     * @param pageConfig 分页参数
+     * @return PageResult
+     */
+    @Override
+    public PageResult getAdminPage(PageConfig pageConfig, Integer groupId, Integer status, String search) {
+        return PageUtils.getPageResult(pageConfig, getPageInfo(pageConfig, status, search, groupId));
+    }
+
+    /**
+     * 调用分页插件完成分页
+     * @param pageConfig PageConfig
+     * @return PageInfo
+     */
+    private PageInfo<AdminEntity> getPageInfo(PageConfig pageConfig, Integer status, String search, Integer groupId) {
+        int pageNum = pageConfig.getPageNum();
+        int pageSize = pageConfig.getPageSize();
+        PageHelper.startPage(pageNum, pageSize);
+        List<AdminEntity> adminEntityList = adminMapper.getAdminPage(groupId, search, status);
+        return new PageInfo<AdminEntity>(adminEntityList);
     }
 }

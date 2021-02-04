@@ -25,6 +25,21 @@ public interface GroupMapper {
     })
     List<Group> getGroupPage(Integer status, String name);
 
+
+    /**
+     * 获得所有用户分组
+     * @param search 分组名称模糊检索
+     * @return List<Group>
+     */
+    @Select("<script>SELECT * FROM groups WHERE 1 = 1 " +
+            "<if test=\"search != '' \"> AND `name` like concat('%', #{search}, '%') </if></script>")
+    @Results({
+            @Result(property = "isSuper", column = "is_super"),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at")
+    })
+    List<Group> getGroupAll(String search);
+
     /**
      * 新增分组菜单
      * @param group Group

@@ -1,8 +1,12 @@
 package com.example.server.mapper;
 
+import com.example.server.entity.AdminEntity;
 import com.example.server.model.Admin;
+import com.example.server.model.Group;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author hanbin
@@ -147,4 +151,24 @@ public interface AdminMapper {
      */
     @Update("UPDATE `admin` SET `status` = #{status}, `updated_at` = #{updatedAt}  WHERE `id` = #{id}")
     Integer editAdminStatus(Integer id, Integer status, String updatedAt);
+
+    /**
+     * 获得用户分组分页
+     * @param groupId 状态
+     * @param search 分组名称模糊检索
+     * @param status 分组名称模糊检索
+     * @return List<Group>
+     */
+    @Select("<script>SELECT `id`, `is_super`, `group_id`, `username`, `nickname`, `mobile`, `mail`, `status`," +
+            " `created_at`, `updated_at` FROM admin WHERE 1 = 1  <if test=\"status != -1 \"> " +
+            "AND `status` = #{status} </if>  <if test=\"search != '' \"> AND `username` like " +
+            "concat('%', #{search}, '%') AND `nickname`  like concat('%', #{search}, '%') </if>" +
+            " <if test=\"groupId != 0 \">  AND `group_id`= #{groupId}  </if></script>")
+    @Results({
+            @Result(property = "isSuper", column = "is_super"),
+            @Result(property = "groupId", column = "group_id"),
+            @Result(property = "createdAt", column = "created_at"),
+            @Result(property = "updatedAt", column = "updated_at")
+    })
+    List<AdminEntity> getAdminPage(Integer groupId, String search, Integer status);
 }
