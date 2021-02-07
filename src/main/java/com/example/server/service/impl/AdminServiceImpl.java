@@ -115,7 +115,7 @@ public class AdminServiceImpl implements AdminService {
             throw new ApiException(ResultEnum.FAIL.getCode(), "手机号已存在");
         }
         Map<String, String> password = PasswordUtils.generalPassword(adminVo.getPassword());
-        Admin admin = new Admin(adminVo.getIsSuper(), adminVo.getGroupId(), adminVo.getUsername(),
+        Admin admin = new Admin(0, adminVo.getGroupId(), adminVo.getUsername(),
                 adminVo.getNickname(), password.get("password"), password.get("salt"), adminVo.getMobile(),
                 adminVo.getMail(), adminVo.getStatus());
         Integer bool = adminMapper.addAdmin(admin);

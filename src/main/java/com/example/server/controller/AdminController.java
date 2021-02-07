@@ -99,7 +99,7 @@ public class AdminController {
     }
 
     @RequestMapping("/edit/password")
-    public Object editAdminPassword(@RequestParam(value = "id") Integer id, @RequestParam(value = "status") String password) {
+    public Object editAdminPassword(@RequestParam(value = "id") Integer id, @RequestParam(value = "password") String password) {
         adminService.editAdminPassword(id, password);
         return ResultUtils.successOnlyMsg("密码编辑成功");
     }
